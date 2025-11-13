@@ -1,9 +1,13 @@
 import React from "react";
 import IconButtons from "./IconButtons";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import "../index.css"
+import 'animate.css';
 
 const Navbar = () => {
     const links = <>
+
+            <li><NavLink to={"/"}>Home</NavLink></li>
             <li><NavLink to={"/addReview"}>Add-Review</NavLink></li>
             <li><NavLink to={"/myReview"}>My-Review</NavLink></li>
     </>
@@ -37,7 +41,7 @@ const Navbar = () => {
             </ul>
           </div>
           <IconButtons></IconButtons>
-          <a className="p-3 font-bold text-[clamp(16px,4vw,22px)]">Food🕸net</a>
+          <Link to={"/"} className="p-3 animate__animated animate__rubberBand font-bold text-[clamp(16px,4vw,22px)]"><div className="w-32">Food🕸net</div></Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1  text-[clamp(14px,2vw,16px)]">

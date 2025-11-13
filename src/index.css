@@ -3,3 +3,7 @@
 *{
   font-family: "Poppins", sans-serif;
 }
+
+ul a.active{
+    color: rgb(244, 128, 93);
+}
