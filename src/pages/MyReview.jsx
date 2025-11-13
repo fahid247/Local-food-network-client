@@ -85,7 +85,7 @@ const MyReviews = () => {
                   </td>
                   <td className="py-3 px-4 flex justify-center gap-3">
                     <button
-                      onClick={() => navigate(`/edit-review/${review._id}`)}
+                      onClick={() => navigate(`/editReview/${review._id}`)}
                       className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md"
                     >
                       Edit
@@ -106,7 +106,7 @@ const MyReviews = () => {
           </table>
         </div>
       )}
-      
+
       {isModalOpen && selectedReview && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-96">

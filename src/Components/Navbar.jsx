@@ -96,26 +96,26 @@ const Navbar = () => {
                   <img
                     src={user.photoURL}
                     alt="User Avatar"
-                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                    className="w-8 h-8 mr-1 rounded-full border-2 border-white object-cover"
                   />
                 ) : (
-                  <FaUserCircle size={28} className="text-white" />
+                  <FaUserCircle size={28} className="text-white mr-1" />
                 )}
               </div>
 
               <button
                 onClick={handleLogOut}
-                className=" btn bg-[#703B3B] border-none text-[min(3vw,14px)]"
+                className=" btn bg-orange-500 hover:bg-orange-600 border-none text-[min(3vw,14px)]"
               >
                 Log Out
               </button>
             </>
           ) : (
             <>
-              <FaUserCircle size={28} className="text-white" />
+              <FaUserCircle size={28} className="text-white mr-1" />
               <Link
                 to="/login"
-                className="btn bg-[#703B3B] border-none text-[min(3vw,14px)]"
+                className="btn bg-orange-500 hover:bg-orange-600 border-none text-[min(3vw,14px)]"
               >
                 {loading ? (
                   <div className="text-center flex justify-center items-center text-gray-500">

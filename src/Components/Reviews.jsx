@@ -5,7 +5,6 @@ import "animate.css";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-  const [allReviews, setAllReviews] = useState([]);
   const navigate = useNavigate();
   const cardRefs = useRef([]);
 
@@ -13,7 +12,6 @@ const Reviews = () => {
     const fetchReviews = async () => {
       try {
         const response = await axiosPublic.get("/reviews");
-        setAllReviews(response.data);
         const sortedReviews = response.data
           .sort((a, b) => b.rating - a.rating)
           .slice(0, 6);
@@ -54,7 +52,7 @@ const Reviews = () => {
   }, [reviews]);
 
   const handleShowAll = () => {
-    setReviews(allReviews);
+    navigate('/allReviews')
   };
 
   return (
