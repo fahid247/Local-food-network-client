@@ -17,7 +17,7 @@ const AddReview = () => {
 
   const {user} =useContext(AuthContext);
 
-  // Dummy logged-in user (replace with your actual user context)
+
   const loggedInUser = {
     email: `${user.email}`,
   };
@@ -41,9 +41,9 @@ const AddReview = () => {
     try {
       const res = await axiosPublic.post("/reviews", newReview);
       if (res.data.insertedId) {
-        setMessage("✅ Review added successfully!");
+        setMessage("Review added successfully!");
       } else {
-        setMessage("✅ Review submitted!");
+        setMessage("Review submitted!");
       }
       setFormData({
         foodName: "",
@@ -55,7 +55,7 @@ const AddReview = () => {
       });
     } catch (error) {
       console.error("Error submitting review:", error);
-      setMessage("❌ Failed to add review. Please try again.");
+      setMessage("Failed to add review. Please try again.");
     } finally {
       setLoading(false);
     }
