@@ -49,7 +49,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn bg-[#C9B59C] border-none max-sm:py-1 max-sm:p-2 text-[clamp(12px,2vw,16px)]">Login</a>
+          <Link to={"/login"} className="btn bg-[#C9B59C] border-none max-sm:py-1 max-sm:p-2 text-[clamp(12px,2vw,16px)]">Login</Link>
         </div>
       </div>
     </>
