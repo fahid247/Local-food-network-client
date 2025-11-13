@@ -1,16 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
 import IconButtons from "./IconButtons";
 import { Link, NavLink } from "react-router";
-import "../index.css"
-import 'animate.css';
+import { FaUserCircle } from "react-icons/fa";
+import "../index.css";
+import "animate.css";
+import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
-    const links = <>
+  const { user, loading, signOutUser } = useContext(AuthContext);
 
-            <li><NavLink to={"/"}>Home</NavLink></li>
-            <li><NavLink to={"/addReview"}>Add-Review</NavLink></li>
-            <li><NavLink to={"/myReview"}>My-Review</NavLink></li>
+  const handleLogOut = () => {
+    signOutUser()
+      .then(() => {
+        toast.success("signout successfully", {
+          style: {
+            backgroundColor: "lightgreen",
+          },
+        });
+      })
+      .catch((error) => {
+        toast.error(`${error}`, {
+          style: {
+            backgroundColor: "black",
+            color: "bisque",
+          },
+        });
+      });
+  };
+
+  const links = (
+    <>
+      <li>
+        <NavLink to={"/"}>Home</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/addReview"}>Add-Review</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/myReview"}>My-Review</NavLink>
+      </li>
     </>
+  );
+
   return (
     <>
       <div className="navbar bg-[#EFE9E3] shadow-sm">
@@ -37,11 +69,16 @@ const Navbar = () => {
               tabIndex="-1"
               className="menu menu-sm dropdown-content bg-[#EFE9E3] rounded-box z-1 mt-3 w-52 p-2 shadow text-[clamp(12px,2vw,16px)]"
             >
-                {links}
+              {links}
             </ul>
           </div>
           <IconButtons></IconButtons>
-          <Link to={"/"} className="p-3 animate__animated animate__rubberBand font-bold text-[clamp(16px,4vw,22px)]"><div className="w-32">Food🕸net</div></Link>
+          <Link
+            to={"/"}
+            className="p-3 animate__animated animate__rubberBand font-bold text-[clamp(16px,4vw,22px)]"
+          >
+            <div className="w-32">Food🕸net</div>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1  text-[clamp(14px,2vw,16px)]">
@@ -49,7 +86,47 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to={"/login"} className="btn bg-[#C9B59C] border-none max-sm:py-1 max-sm:p-2 text-[clamp(12px,2vw,16px)]">Login</Link>
+          {user ? (
+            <>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip={user.displayName || "User"}
+              >
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="User Avatar"
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  />
+                ) : (
+                  <FaUserCircle size={28} className="text-white" />
+                )}
+              </div>
+
+              <button
+                onClick={handleLogOut}
+                className=" btn bg-[#703B3B] border-none text-[min(3vw,14px)]"
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <FaUserCircle size={28} className="text-white" />
+              <Link
+                to="/login"
+                className="btn bg-[#703B3B] border-none text-[min(3vw,14px)]"
+              >
+                {loading ? (
+                  <div className="text-center flex justify-center items-center text-gray-500">
+                    <span className="loading loading-spinner loading-xl"></span>
+                  </div>
+                ) : (
+                  "Login"
+                )}
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </>

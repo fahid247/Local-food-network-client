@@ -7,6 +7,7 @@ import MyReview from '../pages/MyReview';
 import ViewDetails from '../pages/ViewDetails';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import PrivateRoute from './PrivateRouter';
 
 const router = createBrowserRouter([
     {
@@ -19,15 +20,15 @@ const router = createBrowserRouter([
             },
             {
                 path:"/addReview",
-                Component:AddReview
+                element:<PrivateRoute><AddReview></AddReview></PrivateRoute>
             },
             {
                 path:"/myReview",
-                Component:MyReview
+                element:<PrivateRoute><MyReview></MyReview></PrivateRoute>
             },
             {
                 path:"/viewDetails",
-                Component: ViewDetails
+                element:<PrivateRoute><ViewDetails></ViewDetails></PrivateRoute>
             }
         ]
     },
