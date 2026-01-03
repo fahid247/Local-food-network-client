@@ -11,6 +11,8 @@ import PrivateRoute from './PrivateRouter';
 import EditReview from '../pages/EditReview';
 import NotFound from '../pages/NotFound';
 import AllReviews from '../pages/AllReviews';
+import MyProfile from '../pages/Myprofile';
+import UpdateProfile from '../pages/UpdateProfile';
 
 const router = createBrowserRouter([
     {
@@ -30,8 +32,8 @@ const router = createBrowserRouter([
                 element:<PrivateRoute><MyReview></MyReview></PrivateRoute>
             },
             {
-                path:"/viewDetails",
-                element:<PrivateRoute><ViewDetails></ViewDetails></PrivateRoute>
+                path:"/viewDetails/:id",
+                element:<ViewDetails></ViewDetails>
             },
             {
                 path:"/editReview/:id",
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
             {
                 path:"*",
                 Component:NotFound
+            },
+            {
+                path:"/myProfile",
+                Component: MyProfile
+            },
+            {
+                path:"/updateProfile",
+                Component: UpdateProfile
             }
         ]
     },

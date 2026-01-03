@@ -47,15 +47,16 @@ const popularRestaurants = [
 
 const PopularRestaurantsTable = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-base-200">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl animate__animated animate__pulse font-bold text-gray-800 mb-8 text-center">
+        <h2 className="text-3xl font-extrabold text-base-content text-center mb-10 animate__animated animate__fadeInDown">
           Popular Restaurants
         </h2>
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-            <thead className="bg-orange-500 text-white">
+        {/* Table for large screens */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="min-w-full bg-base-100 border border-base-300 rounded-lg shadow-sm">
+            <thead className="bg-primary text-primary-content">
               <tr>
                 <th className="py-3 px-6 text-left">Restaurant Name</th>
                 <th className="py-3 px-6 text-left">Location</th>
@@ -67,16 +68,43 @@ const PopularRestaurantsTable = () => {
               {popularRestaurants.map((restaurant, index) => (
                 <tr
                   key={restaurant.id}
-                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+                  className={`transition hover:shadow-lg hover:bg-base-100 ${
+                    index % 2 === 0 ? "bg-base-200" : "bg-base-100"
+                  } animate__animated animate__fadeInUp`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <td className="py-3 px-6">{restaurant.name}</td>
+                  <td className="py-3 px-6 font-medium">{restaurant.name}</td>
                   <td className="py-3 px-6">{restaurant.location}</td>
-                  <td className="py-3 px-6">⭐ {restaurant.rating}</td>
+                  <td className="py-3 px-6 text-yellow-500 font-semibold">
+                    ⭐ {restaurant.rating}
+                  </td>
                   <td className="py-3 px-6">{restaurant.description}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Card layout for small screens */}
+        <div className="md:hidden grid gap-6">
+          {popularRestaurants.map((restaurant, index) => (
+            <div
+              key={restaurant.id}
+              className="bg-base-100 p-4 rounded-xl shadow hover:shadow-lg transition animate__animated animate__fadeInUp"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <h3 className="text-xl font-bold text-base-content mb-1">
+                {restaurant.name}
+              </h3>
+              <p className="text-sm text-base-content/70 mb-1">
+                {restaurant.location}
+              </p>
+              <p className="text-yellow-500 font-semibold mb-2">
+                ⭐ {restaurant.rating}
+              </p>
+              <p className="text-base-content">{restaurant.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -1,96 +1,107 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+
 import image1 from "../assets/pexels-abhinavcoca-291528.jpg";
 import image2 from "../assets/pexels-chanwalrus-958545.jpg";
 import image3 from "../assets/pexels-janetrangdoan-1099680.jpg";
-// Import Swiper styles
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
-// Import required modules
-import { Pagination, Navigation } from "swiper/modules";
+import "animate.css";
 
 const HeroSlider = () => {
+  const slides = [
+    {
+      image: image2,
+      title: "Join Our Food Lovers Community",
+      subtitle: "Share your creations, connect with others, and celebrate good food.",
+      buttonPrimary: "Join Now",
+      buttonSecondary: "Learn More",
+      colorPrimary: "bg-primary hover:bg-accent",
+      colorSecondary: "bg-white text-black hover:bg-gray-100",
+    },
+    {
+      image: image3,
+      title: "Fresh & Healthy Ingredients",
+      subtitle: "We believe in good food made with fresh, local ingredients.",
+      buttonPrimary: "Learn More",
+      buttonSecondary: "Our Recipes",
+      colorPrimary: "bg-primary hover:bg-accent",
+      colorSecondary: "bg-white text-black hover:bg-gray-100",
+    },
+    {
+      image: image1,
+      title: "Discover Delicious Recipes",
+      subtitle: "Explore a world of flavors and cooking inspirations from top chefs.",
+      buttonPrimary: "Explore Recipes",
+      buttonSecondary: "Join Community",
+      colorPrimary: "bg-primary hover:bg-accent",
+      colorSecondary: "bg-white text-black hover:bg-gray-100",
+    },
+  ];
+
   return (
-    <div>
-      <div className="h-screen bg-black text-white">
-        <Swiper
-          slidesPerView={1}
-          spaceBetween={30}
-          loop={true}
-          pagination={{ clickable: true }}
-          navigation={true}
-          modules={[Pagination, Navigation]}
-          className="w-full h-full"
-        >
-            <SwiperSlide>
+    <section className="relative h-[70vh] w-full overflow-hidden">
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={30}
+        loop={true}
+        pagination={{ clickable: true }}
+        navigation={true}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        modules={[Pagination, Navigation, Autoplay]}
+        className="h-full"
+      >
+        {slides.map((slide, idx) => (
+          <SwiperSlide key={idx}>
             <div
-              className="relative w-full h-full bg-center bg-cover flex items-center justify-center"
-              style={{ backgroundImage: `url(${image2})`}} 
+              className="relative w-full h-full flex items-center justify-center overflow-hidden"
+              style={{ backgroundImage: `url(${slide.image})` }}
             >
-              <div className="absolute inset-0 bg-black/50"></div>
+              {/* DARKER GRADIENT OVERLAY */}
+              <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/70 to-black/80"></div>
 
-              <div className="relative z-10 text-center text-white px-6">
-                <h1 className="text-4xl animate__animated animate__fadeInUp md:text-6xl font-bold mb-4">
-                  Join Our Food Lovers Community
+              {/* Inner content */}
+              <div className="relative z-10 text-center px-6 sm:px-10 md:px-16 max-w-4xl">
+                {/* Accent divider */}
+                <div className="w-24 h-1 mx-auto mb-6 bg-primary rounded-full animate__animated animate__fadeInDown"></div>
+
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white drop-shadow-xl mb-4 animate__animated animate__fadeInDown animate__delay-0_5s">
+                  {slide.title}
                 </h1>
-                <p className="text-lg md:text-xl mb-6 max-w-xl mx-auto">
-                  Share your creations, connect with others, and celebrate good
-                  food.
+                <p className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow-md mb-8 animate__animated animate__fadeInUp animate__delay-1s font-bold">
+                  {slide.subtitle}
                 </p>
-                <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-full transition">
-                  Join Now
-                </button>
+
+                {/* Buttons */}
+                <div className="flex flex-col sm:flex-row justify-center gap-4 animate__animated animate__fadeInUp animate__delay-2s">
+                  <button
+                    className={`px-8 py-3 rounded-full font-semibold text-white transition transform hover:scale-105 ${slide.colorPrimary}`}
+                  >
+                    {slide.buttonPrimary}
+                  </button>
+                  <button
+                    className={`px-8 py-3 rounded-full font-semibold transition transform hover:scale-105 ${slide.colorSecondary}`}
+                  >
+                    {slide.buttonSecondary}
+                  </button>
+                </div>
+              </div>
+
+              {/* Subtle zoom effect */}
+              <div className="absolute inset-0">
+                <div
+                  className="w-full h-full bg-cover bg-center scale-105 animate-pulse-slow"
+                  style={{ backgroundImage: `url(${slide.image})` }}
+                ></div>
               </div>
             </div>
           </SwiperSlide>
-          <SwiperSlide>
-            <div
-              className="relative w-full h-full bg-center bg-cover flex items-center justify-center"
-              style={{ backgroundImage: `url(${image3})` }}
-            >
-              <div className="absolute inset-0 bg-black/50"></div>
-
-              <div className="relative z-10 text-center text-white px-6">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                  Fresh & Healthy Ingredients
-                </h1>
-                <p className="text-lg md:text-xl mb-6 max-w-xl mx-auto">
-                  We believe in good food made with fresh, local ingredients.
-                </p>
-                <button className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full transition">
-                  Learn More
-                </button>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div
-              className="relative w-full h-full bg-center bg-cover flex items-center justify-center"
-              style={{ backgroundImage: `url(${image1})` }}
-            >
-              <div className="absolute inset-0 bg-black/50"></div>
-
-              <div className="relative z-10 text-center text-white px-6">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                  Discover Delicious Recipes
-                </h1>
-                <p className="text-lg md:text-xl mb-6 max-w-xl mx-auto">
-                  Explore a world of flavors and cooking inspirations from top
-                  chefs.
-                </p>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full transition">
-                  Explore Recipes
-                </button>
-              </div>
-            </div>
-          </SwiperSlide>
-          
-          
-        </Swiper>
-      </div>
-    </div>
+        ))}
+      </Swiper>
+    </section>
   );
 };
 

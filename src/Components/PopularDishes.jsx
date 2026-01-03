@@ -47,29 +47,56 @@ const popularDishes = [
 
 const PopularDishes = () => {
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl animate__animated animate__pulse font-bold text-gray-800 mb-12 text-center">
-          Popular Dishes & Recipes
-        </h2>
+    <section className="py-20 bg-base-200">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <h2 className="text-4xl font-bold text-orange-600">
+            Popular Dishes
+          </h2>
+          <p className="text-gray-600 mt-3 max-w-xl mx-auto">
+            Discover the most loved dishes from our food community.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Review-style Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {popularDishes.map((dish) => (
             <div
               key={dish.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
+              className="bg-white rounded-2xl shadow-md overflow-hidden
+                         hover:-translate-y-2 hover:shadow-md
+                         transition-all duration-300 ease-out
+                         flex flex-col"
             >
-              <img
-                src={dish.image}
-                alt={dish.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-3">{dish.name}</h3>
-                <p className="text-gray-700 mb-4">{dish.recipe}</p>
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded transition">
-                  View Full Recipe
-                </button>
+              {/* Image (same as review cards) */}
+              <div className="h-56 overflow-hidden">
+                <img
+                  src={dish.image}
+                  alt={dish.name}
+                  className="w-full h-full object-cover
+                             hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+
+              {/* Body */}
+              <div className="p-6 flex flex-col grow">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {dish.name}
+                </h3>
+
+                <p className="text-sm text-gray-600 grow">
+                  {dish.recipe}
+                </p>
+
+                {/* Footer Button (aligned like review cards) */}
+                <div className="mt-5 pt-4 ">
+                  <button
+                    className="btn btn-outline btn-primary btn-sm w-full mt-auto"
+                  >
+                    View Full Recipe
+                  </button>
+                </div>
               </div>
             </div>
           ))}

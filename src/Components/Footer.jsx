@@ -1,43 +1,105 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-orange-300 text-black py-5">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start space-y-6 md:space-y-0">
+    <footer className="bg-base-100 border-t border-base-300 text-base-content">
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
 
-        {/* Logo & Name with Tagline */}
-        <div className="flex flex-col items-center md:items-start space-y-2">
-          <div className="flex items-center space-x-3">
-            
-            <span className="text-2xl font-bold text-black">Local Foods Network</span>
-          </div>
-          <p className="text-sm text-black max-w-xs text-center md:text-left">
-            Discover the best food experiences, reviews, and hidden gems around you!
+        {/* ================= BRAND ================= */}
+        <div>
+          <h2 className="text-2xl font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Food🕸Net
+          </h2>
+          <p className="text-sm mt-3 text-base-content/70 max-w-sm">
+            Discover the best local food experiences, honest reviews, and
+            community-driven recommendations near you.
           </p>
         </div>
 
-        {/* Social Media Icons */}
-        <div className="flex space-x-6">
-          <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-orange-400 transition-colors">
-            <FaFacebookF size={20} />
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-orange-400 transition-colors">
-            <FaTwitter size={20} />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-orange-400 transition-colors">
-            <FaInstagram size={20} />
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-orange-400 transition-colors">
-            <FaLinkedinIn size={20} />
-          </a>
+        {/* ================= CONTACT ================= */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+
+          <ul className="space-y-3 text-sm text-base-content/80">
+            <li className="flex items-center gap-3">
+              <FaEnvelope className="text-primary" />
+              <span>fahid32446@gmail.com</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <FaPhoneAlt className="text-primary" />
+              <span>+880 1644-887100</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <FaMapMarkerAlt className="text-primary" />
+              <span>Dhaka, Bangladesh</span>
+            </li>
+          </ul>
         </div>
 
+        {/* ================= SOCIAL ================= */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+
+          <div className="flex gap-4">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noreferrer"
+              className="w-10 h-10 flex items-center justify-center rounded-full
+                         border border-base-300 hover:border-primary
+                         hover:text-primary transition"
+            >
+              <FaFacebookF />
+            </a>
+
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noreferrer"
+              className="w-10 h-10 flex items-center justify-center rounded-full
+                         border border-base-300 hover:border-primary
+                         hover:text-primary transition"
+            >
+              <FaTwitter />
+            </a>
+
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noreferrer"
+              className="w-10 h-10 flex items-center justify-center rounded-full
+                         border border-base-300 hover:border-primary
+                         hover:text-primary transition"
+            >
+              <FaInstagram />
+            </a>
+
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noreferrer"
+              className="w-10 h-10 flex items-center justify-center rounded-full
+                         border border-base-300 hover:border-primary
+                         hover:text-primary transition"
+            >
+              <FaLinkedinIn />
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="mt-10 border-t border-black pt-4 text-center text-black text-sm">
-        &copy; {new Date().getFullYear()} Local Foods Network. All rights reserved.
+      {/* ================= BOTTOM BAR ================= */}
+      <div className="border-t border-base-300 py-4 text-center text-sm text-base-content/60">
+        © {new Date().getFullYear()} FoodNet. All rights reserved.
       </div>
     </footer>
   );
