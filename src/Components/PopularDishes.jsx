@@ -51,10 +51,10 @@ const PopularDishes = () => {
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-14">
-          <h2 className="text-4xl font-bold text-orange-600">
+          <h2 className="text-4xl font-bold text-base-content">
             Popular Dishes
           </h2>
-          <p className="text-gray-600 mt-3 max-w-xl mx-auto">
+          <p className="text-base-content/70 mt-3 max-w-xl mx-auto">
             Discover the most loved dishes from our food community.
           </p>
         </div>
@@ -64,7 +64,7 @@ const PopularDishes = () => {
           {popularDishes.map((dish) => (
             <div
               key={dish.id}
-              className="bg-white rounded-2xl shadow-md overflow-hidden
+              className="bg-base-100 rounded-2xl shadow-sm overflow-hidden
                          hover:-translate-y-2 hover:shadow-md
                          transition-all duration-300 ease-out
                          flex flex-col"
@@ -81,11 +81,11 @@ const PopularDishes = () => {
 
               {/* Body */}
               <div className="p-6 flex flex-col grow">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                <h3 className="text-lg font-semibold text-base-content mb-2">
                   {dish.name}
                 </h3>
 
-                <p className="text-sm text-gray-600 grow">
+                <p className="text-sm text-base-content/70 grow">
                   {dish.recipe}
                 </p>
 

@@ -13,6 +13,11 @@ import NotFound from '../pages/NotFound';
 import AllReviews from '../pages/AllReviews';
 import MyProfile from '../pages/Myprofile';
 import UpdateProfile from '../pages/UpdateProfile';
+import ComplainBox from '../pages/ComplainBox';
+import AboutUs from '../pages/AboutUs';
+import DashboardLayout from '../DashboardLayout/DashboardLayout';
+import DashHome from '../pages/DashHome';
+import MyReviews from '../pages/MyReview';
 
 const router = createBrowserRouter([
     {
@@ -22,14 +27,6 @@ const router = createBrowserRouter([
             {
                 index:true,
                 Component:Home,
-            },
-            {
-                path:"/addReview",
-                element:<PrivateRoute><AddReview></AddReview></PrivateRoute>
-            },
-            {
-                path:"/myReview",
-                element:<PrivateRoute><MyReview></MyReview></PrivateRoute>
             },
             {
                 path:"/viewDetails/:id",
@@ -54,6 +51,14 @@ const router = createBrowserRouter([
             {
                 path:"/updateProfile",
                 Component: UpdateProfile
+            },
+            {
+                path:"/complainBox",
+                Component: ComplainBox
+            },
+            {
+                path:"/aboutUs",
+                Component: AboutUs
             }
         ]
     },
@@ -64,6 +69,24 @@ const router = createBrowserRouter([
     {
         path:"/register",
         Component:Register
+    },
+    {
+        path:"/dashboard",
+        Component: DashboardLayout,
+        children:[
+             {
+                index:true,
+                Component: DashHome
+             },
+             {
+                path:"/dashboard/my-reviews",
+                Component: MyReviews
+             },
+             {
+                path:"/dashboard/add-reviews",
+                Component: AddReview
+             }
+        ]
     }
 ])
 

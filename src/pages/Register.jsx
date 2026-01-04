@@ -4,9 +4,10 @@ import { AuthContext } from "../context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import img from "../assets/Screenshot 2026-01-03 223526.png";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -41,9 +42,12 @@ const Register = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
     const form = e.target;
+    const name = form.name.value;
     const email = form.email.value;
+    const photo = form.photo.value;
     const password = form.password.value;
 
+    // Password validation
     if (!/[A-Z]/.test(password)) {
       setPasswordError("Password must contain at least one uppercase letter.");
       return;
@@ -58,10 +62,16 @@ const Register = () => {
     }
     setPasswordError("");
 
+    // Create user
     createUser(email, password)
       .then(() => {
-        showSuccessAlert("Successfully Signed Up!");
-        navigate(location.state ? location.state : "/");
+        // Update profile with name and photo
+        updateUserProfile({ displayName: name, photoURL: photo })
+          .then(() => {
+            showSuccessAlert("Successfully Signed Up!");
+            navigate(location.state ? location.state : "/");
+          })
+          .catch((error) => showErrorAlert(error.message));
       })
       .catch((error) => showErrorAlert(error.message));
   };
@@ -71,7 +81,7 @@ const Register = () => {
       {/* Left: Image */}
       <div className="hidden md:flex flex-1 items-center justify-center bg-base-100 p-3">
         <motion.img
-          src="https://i.ibb.co/tTdG8G8q/Screenshot-2026-01-03-223526.png"
+          src={img}
           alt="Register Banner"
           className="max-h-[92vh] rounded-2xl mx-auto"
           initial={{ x: -50, opacity: 0 }}

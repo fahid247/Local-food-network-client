@@ -78,18 +78,23 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/addReview" className={navLinkStyle}>
-          Add Review
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/myReview" className={navLinkStyle}>
-          My Reviews
+        <NavLink to="/aboutUs" className={navLinkStyle}>
+          About Us
         </NavLink>
       </li>
       <li>
         <NavLink to="/myProfile" className={navLinkStyle}>
           My Profile
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/complainBox" className={navLinkStyle}>
+          Complain Box
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard" className={navLinkStyle}>
+          Dashboard
         </NavLink>
       </li>
     </>

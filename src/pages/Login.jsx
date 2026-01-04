@@ -4,23 +4,26 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import img from "../assets/Screenshot 2026-01-03 223526.png";
 
 const Login = () => {
-  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [passwordError, setPasswordError] = useState("");
   const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  // SweetAlert helpers
   const showSuccessAlert = (message) => {
     Swal.fire({
       icon: "success",
       title: "Success",
       text: message,
       background: "#fff7e6",
-      color: "#f59e0b", // warm orange text
+      color: "#f59e0b",
       timer: 2000,
       showConfirmButton: false,
       timerProgressBar: true,
@@ -33,46 +36,39 @@ const Login = () => {
       title: "Oops...",
       text: message,
       background: "#fff7e6",
-      color: "#dc2626", // red
+      color: "#dc2626",
       confirmButtonColor: "#f59e0b",
     });
   };
 
+  // Email & Password Login
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!emailInput || !passwordInput) {
+      showErrorAlert("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+    signInUser(emailInput, passwordInput)
+      .then(() => {
+        showSuccessAlert("Login Successful!");
+        navigate(location.state ? location.state : "/");
+      })
+      .catch((err) => showErrorAlert(err.message))
+      .finally(() => setLoading(false));
+  };
+
+  // Google Login
   const handleGoogleLogin = () => {
+    setLoading(true);
     signInWithGoogle()
       .then(() => {
         showSuccessAlert("Logged in with Google!");
         navigate(location.state ? location.state : "/");
       })
-      .catch((error) => showErrorAlert(error.message));
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-
-    if (!/[A-Z]/.test(password)) {
-      setPasswordError("Password must contain at least one uppercase letter.");
-      return;
-    }
-    if (!/[a-z]/.test(password)) {
-      setPasswordError("Password must contain at least one lowercase letter.");
-      return;
-    }
-    if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters long.");
-      return;
-    }
-    setPasswordError("");
-
-    createUser(email, password)
-      .then(() => {
-        showSuccessAlert("Login Successful!");
-        navigate(location.state ? location.state : "/");
-      })
-      .catch((error) => showErrorAlert(error.message));
+      .catch((err) => showErrorAlert(err.message))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -92,28 +88,32 @@ const Login = () => {
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="email"
+              name="email"
               placeholder="Email"
               value={emailInput}
               onChange={(e) => setEmailInput(e.target.value)}
               className="input input-bordered w-full"
               required
             />
+
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
                 placeholder="Password"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
                 className="input input-bordered w-full"
                 required
               />
               <button
                 type="button"
-                className="absolute right-4 top-3 text-gray-600"
                 onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-3 text-gray-600"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-            {passwordError && <p className="text-red-600 text-sm">{passwordError}</p>}
 
             <div className="flex justify-between text-sm mb-4">
               <Link to="/forgetPassword" className="text-primary hover:underline">
@@ -121,12 +121,19 @@ const Login = () => {
               </Link>
             </div>
 
-            <button className="btn btn-primary w-full">Sign In</button>
+            <button
+              type="submit"
+              className={`btn btn-primary w-full ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+              disabled={loading}
+            >
+              {loading ? "Signing In..." : "Sign In"}
+            </button>
           </form>
 
           <button
             onClick={handleGoogleLogin}
             className="btn w-full mt-4 bg-white text-black border-[#cfcbcb] flex items-center justify-center gap-2"
+            disabled={loading}
           >
             <svg
               aria-label="Google logo"
@@ -158,7 +165,7 @@ const Login = () => {
       {/* Right: Image */}
       <div className="hidden md:flex flex-1 items-center justify-center bg-base-100 p-3">
         <img
-          src="https://i.ibb.co/tTdG8G8q/Screenshot-2026-01-03-223526.png"
+          src={img}
           alt="Login Banner"
           className="max-h-[92vh] rounded-2xl mx-auto"
         />

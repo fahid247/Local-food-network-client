@@ -2,36 +2,39 @@ import React, { useContext, useEffect, useState } from "react";
 import axiosPublic from "../axiosPublic";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const MyReviews = () => {
   const [reviews, setReviews] = useState([]);
   const [selectedReview, setSelectedReview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-
-  const {user} = useContext(AuthContext)
-
-
-  const loggedInUser = {
-    email: `${user.email}`,
-  };
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!user?.email) return;
+
     const fetchReviews = async () => {
       try {
         const res = await axiosPublic.get("/reviews");
-        const userReviews = res.data.filter(
-          (r) => r.email === loggedInUser.email
+        const allReviews = res.data?.reviews || [];
+
+        const userReviews = allReviews.filter(
+          (review) => review.email === user.email
         );
+
         setReviews(userReviews);
       } catch (error) {
         console.error("Error fetching user reviews:", error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchReviews();
-  },[]);
 
+    fetchReviews();
+  }, [user]);
 
   const handleDelete = async (id) => {
     try {
@@ -43,92 +46,128 @@ const MyReviews = () => {
     }
   };
 
-  return (
-    <div className="max-w-6xl mx-auto p-6 mt-12">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-        My Reviews
-      </h2>
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[60vh] text-base-content/60">
+        <span className="loading loading-spinner text-warning"></span>
+      </div>
+    );
+  }
 
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-12">
+      {/* Header */}
+      <div className="mb-10 text-center">
+        <h2 className="text-4xl font-bold text-primary">
+          My Reviews
+        </h2>
+        <p className="text-base-content/60 mt-2">
+          Manage, edit, or remove the reviews you've shared
+        </p>
+      </div>
+
+      {/* Empty State */}
       {reviews.length === 0 ? (
-        <p className="text-center text-gray-500">No reviews added yet.</p>
+        <div className="bg-base-100 rounded-box shadow p-10 text-center">
+          <p className="text-base-content/60 text-lg">
+            You haven't added any reviews yet.
+          </p>
+        </div>
       ) : (
-        <div className="overflow-x-auto shadow-lg rounded-lg border">
-          <table className="min-w-full text-sm text-left text-gray-700">
-            <thead className="bg-orange-500 text-white uppercase text-sm">
-              <tr>
-                <th className="py-3 px-4">Image</th>
-                <th className="py-3 px-4">Food Name</th>
-                <th className="py-3 px-4">Restaurant</th>
-                <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reviews.map((review) => (
-                <tr
-                  key={review._id}
-                  className="border-b hover:bg-orange-50 transition"
-                >
-                  <td className="py-3 px-4">
-                    <img
-                      src={review.foodImage}
-                      alt={review.foodName}
-                      className="w-16 h-16 object-cover rounded-md"
-                    />
-                  </td>
-                  <td className="py-3 px-4 font-semibold">
-                    {review.foodName}
-                  </td>
-                  <td className="py-3 px-4">{review.restaurantName}</td>
-                  <td className="py-3 px-4 text-gray-500">
-                    {new Date(review.date).toLocaleDateString()}
-                  </td>
-                  <td className="py-3 px-4 flex justify-center gap-3">
-                    <button
-                      onClick={() => navigate(`/editReview/${review._id}`)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedReview(review);
-                        setIsModalOpen(true);
-                      }}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
-                    >
-                      Delete
-                    </button>
-                  </td>
+        <div className="bg-base-100 rounded-box shadow overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="table">
+              <thead className="bg-base-200 text-base-content">
+                <tr>
+                  <th>Image</th>
+                  <th>Food</th>
+                  <th>Restaurant</th>
+                  <th>Date</th>
+                  <th className="text-center">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {reviews.map((review) => (
+                  <tr key={review._id} className="hover:bg-base-200 transition">
+                    <td>
+                      <img
+                        src={review.foodImage}
+                        alt={review.foodName}
+                        className="w-16 h-16 rounded-box object-cover border border-base-300"
+                      />
+                    </td>
+
+                    <td className="font-semibold text-base-content">
+                      {review.foodName}
+                    </td>
+
+                    <td className="text-base-content/70">
+                      {review.restaurantName}
+                    </td>
+
+                    <td className="text-base-content/60">
+                      {new Date(review.date).toLocaleDateString()}
+                    </td>
+
+                    <td>
+                      <div className="flex justify-center gap-2">
+                        <button
+                          onClick={() =>
+                            navigate(`/editReview/${review._id}`)
+                          }
+                          className="btn btn-sm btn-primary"
+                        >
+                          <FaEdit /> Edit
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            setSelectedReview(review);
+                            setIsModalOpen(true);
+                          }}
+                          className="btn btn-sm btn-outline btn-error"
+                        >
+                          <FaTrash /> Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
+      {/* Delete Modal */}
       {isModalOpen && selectedReview && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              Confirm Delete
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-base-100 rounded-box shadow-xl w-full max-w-md p-6">
+            <h3 className="text-xl font-semibold text-base-content mb-3">
+              Confirm Deletion
             </h3>
-            <p className="text-gray-600 mb-6">
+
+            <p className="text-base-content/70 mb-6">
               Are you sure you want to delete the review for{" "}
-              <strong>{selectedReview.foodName}</strong>?
+              <span className="font-semibold">
+                {selectedReview.foodName}
+              </span>
+              ?
             </p>
-            <div className="flex justify-end gap-4">
+
+            <div className="flex justify-end gap-3">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 rounded-md border border-gray-400 text-gray-700 hover:bg-gray-100"
+                className="btn btn-ghost"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(selectedReview._id)}
-                className="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600"
+                className="btn btn-error"
               >
-                Confirm
+                Yes, Delete
               </button>
             </div>
           </div>

@@ -4,6 +4,7 @@ import HeroSlider from "../Components/HeroSlider";
 import Reviews from "../Components/Reviews";
 import PopularDishes from "../Components/PopularDishes";
 import PopularRestaurantsTable from "../Components/PopularResturants";
+import FAQ from "../Components/FAQ";
 
 const Home = () => {
   return (
@@ -19,6 +20,9 @@ const Home = () => {
       </section>
       <section className="popular-recepies">
         <PopularDishes></PopularDishes>
+      </section>
+      <section className="FAQ">
+        <FAQ></FAQ>
       </section>
     </>
   );
